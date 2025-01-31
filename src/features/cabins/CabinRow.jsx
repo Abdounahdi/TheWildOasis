@@ -1,14 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 import Button from "../../ui/Button";
 import Row from "../../ui/Row";
 import CreateCabinForm from "./CreateCabinForm";
 
 import { formatCurrency } from "../../utils/helpers";
-import { deleteCabin } from "../../services/apiCabins";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateEditCabin } from "./useCreateEditCabin";
@@ -90,7 +87,12 @@ function CabinRow({ cabin }) {
           <span>&mdash;</span>
         )}
         <Row type="horizontal">
-          <Button disabled={isCreating} onClick={handleDuplicate } variation="secondary" size="medium">
+          <Button
+            disabled={isCreating}
+            onClick={handleDuplicate}
+            variation="secondary"
+            size="medium"
+          >
             <HiSquare2Stack />
           </Button>
           <Button

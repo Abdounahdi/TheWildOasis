@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 import Button from "../../ui/Button";
@@ -9,6 +8,8 @@ import { formatCurrency } from "../../utils/helpers";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateEditCabin } from "./useCreateEditCabin";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 //Style Components :
 
@@ -54,8 +55,6 @@ const Discount = styled.div`
 //Component :
 
 function CabinRow({ cabin }) {
-  const [show, setShow] = useState(false);
-
   const { id, image, name, regularPrice, discount, maxCapacity, description } =
     cabin;
 
@@ -75,45 +74,56 @@ function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
   return (
-    <>
-      <TableRow role="row ">
-        <Img src={image} alt={`Image of Cabin ${cabin.id}`} />
-        <Cabin>{name}</Cabin>
-        <div>Fits up to {maxCapacity} guests</div>
-        <Price>{formatCurrency(regularPrice)}</Price>
-        {discount ? (
-          <Discount>{formatCurrency(discount)}</Discount>
-        ) : (
-          <span>&mdash;</span>
-        )}
-        <Row type="horizontal">
-          <Button
-            disabled={isCreating}
-            onClick={handleDuplicate}
-            variation="secondary"
-            size="medium"
-          >
-            <HiSquare2Stack />
-          </Button>
-          <Button
-            variation="secondary"
-            size="medium"
-            onClick={() => setShow((show) => !show)}
-          >
-            <HiPencil />
-          </Button>
-          <Button
-            onClick={() => deleteCabin(id)}
-            variation="danger"
-            size="medium"
-            disabled={isDeleting}
-          >
-            <HiTrash />
-          </Button>
-        </Row>
-      </TableRow>
-      {show && <CreateCabinForm editCabinData={cabin} />}
-    </>
+    <TableRow role="row ">
+      <Img src={image} alt={`Image of Cabin ${cabin.id}`} />
+      <Cabin>{name}</Cabin>
+      <div>Fits up to {maxCapacity} guests</div>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      {discount ? (
+        <Discount>{formatCurrency(discount)}</Discount>
+      ) : (
+        <span>&mdash;</span>
+      )}
+
+      {/* buttons */}
+
+      <Row type="horizontal">
+        <Button
+          disabled={isCreating}
+          onClick={handleDuplicate}
+          variation="secondary"
+          size="medium"
+        >
+          <HiSquare2Stack />
+        </Button>
+
+        <Modal>
+          <Modal.Open>
+            <Button variation="secondary" size="medium">
+              <HiPencil />
+            </Button>
+          </Modal.Open>
+          <Modal.Window>
+            <CreateCabinForm editCabinData={cabin} />
+          </Modal.Window>
+        </Modal>
+
+        <Modal>
+          <Modal.Open>
+            <Button variation="danger" size="medium" disabled={isDeleting}>
+              <HiTrash />
+            </Button>
+          </Modal.Open>
+          <Modal.Window>
+            <ConfirmDelete
+              resourceName="Cabin"
+              disabled={isDeleting}
+              onConfirm={() => deleteCabin(id)}
+            />
+          </Modal.Window>
+        </Modal>
+      </Row>
+    </TableRow>
   );
 }
 

@@ -58,3 +58,10 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
+function Table(){
+  return <StyledTable>Hello</StyledTable>
+}
+
+
+export default Table

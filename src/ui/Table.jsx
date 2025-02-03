@@ -1,3 +1,5 @@
+import { createContext, useContext } from "react";
+import { HiArchiveBoxXMark } from "react-icons/hi2";
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -57,4 +59,53 @@ const Empty = styled.p`
   font-weight: 500;
   text-align: center;
   margin: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 `;
+
+const TableContext = createContext();
+
+function Table({ children, columns }) {
+  return (
+    <TableContext.Provider value={{ columns }}>
+      <StyledTable role="table">{children}</StyledTable>
+    </TableContext.Provider>
+  );
+}
+
+function Header({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledHeader role="row" columns={columns} as="header">
+      {children}
+    </StyledHeader>
+  );
+}
+
+function Row({ children }) {
+  const { columns } = useContext(TableContext);
+  return (
+    <StyledRow role="row" columns={columns}>
+      {children}
+    </StyledRow>
+  );
+}
+
+function Body({ data, render }) {
+  if (!data.length)
+    return (
+      <Empty>
+        <HiArchiveBoxXMark /> <span>No data to show at the moment !</span>
+      </Empty>
+    );
+  return <StyledBody>{data.map(render)}</StyledBody>;
+}
+
+Table.Header = Header;
+Table.Body = Body;
+Table.Row = Row;
+Table.Footer = Footer;
+
+export default Table;

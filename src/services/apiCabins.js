@@ -1,7 +1,14 @@
 import supabase, { supabaseUrl } from "./supaBase";
 
-export async function getCabins() {
-  const { data, error } = await supabase.from("cabins").select("*");
+export async function getCabins(filter, sortBy) {
+  let query = supabase.from("cabins").select();
+
+  if (filter !== "all") {
+    query[filter === "withDiscount" ? "gt" : "eq"]("discount", 0);
+  }
+
+  const { data, error } = await query;
+
   if (error) {
     console.error(error);
     throw new Error("Cabins Could not be loaded");

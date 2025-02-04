@@ -3,6 +3,8 @@ import CabinRow from "./CabinRow";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import { useContext } from "react";
+import { FilterContext } from "../../ui/Filter";
 
 // const Table = styled.div`
 //   border: 1px solid var(--color-grey-200);
@@ -29,7 +31,14 @@ import Menus from "../../ui/Menus";
 // `;
 
 function CabinTable() {
-  const { isLoading, cabins } = useCabins();
+  let { isLoading, cabins } = useCabins();
+  const { filterBy } = useContext(FilterContext);
+
+  if (filterBy === "withDiscount") {
+    cabins = cabins.filter((cabin) => cabin.discount);
+  } else if (filterBy === "noDiscount") {
+    cabins = cabins.filter((cabin) => !cabin.discount);
+  }
 
   if (isLoading) return <Spinner />;
 

@@ -1,3 +1,4 @@
+import { createContext, useContext, useState } from "react";
 import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
@@ -33,3 +34,42 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+export const FilterContext = createContext();
+
+function Filter({ children }) {
+  const [filterBy, setFilterBy] = useState("");
+
+  const chooseFilter = setFilterBy;
+  const noFilter = () => setFilterBy("");
+
+  return (
+    <FilterContext.Provider
+      value={{ chooseFilter, filterBy, setFilterBy, noFilter }}
+    >
+      {children}
+    </FilterContext.Provider>
+  );
+}
+
+function Option({ children, name }) {
+  const { filterBy, chooseFilter } = useContext(FilterContext);
+  return (
+    <FilterButton
+      active={name === filterBy}
+      disabled={name === filterBy}
+      onClick={() => chooseFilter(name)}
+    >
+      {children}
+    </FilterButton>
+  );
+}
+
+function Cotainer({ children }) {
+  return <StyledFilter>{children}</StyledFilter>;
+}
+
+Filter.Option = Option;
+Filter.Cotainer = Cotainer;
+
+export default Filter;

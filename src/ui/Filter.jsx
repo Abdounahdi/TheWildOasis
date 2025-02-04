@@ -1,3 +1,4 @@
+import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const StyledFilter = styled.div`
@@ -33,3 +34,72 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+function Filter({ filterField, options }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  if (!searchParams.get("discount")) {
+    searchParams.set("discount", "all");
+    setSearchParams(searchParams);
+  }
+
+  function handleFilterBy(e) {
+    searchParams.set("discount", e.target.value);
+    setSearchParams(searchParams);
+  }
+
+  return (
+    <StyledFilter>
+      {options.map((option) => (
+        <FilterButton
+          value={option.value}
+          key={Math.random()}
+          active={option.value === searchParams.get("discount") ? "true" : ""}
+          disabled={option.value === searchParams.get("discount")}
+          onClick={handleFilterBy}
+        >
+          {option.label}
+        </FilterButton>
+      ))}
+    </StyledFilter>
+  );
+}
+
+export default Filter;
+
+// export const FilterContext = createContext();
+
+// function Filter({ children }) {
+//   const [filterBy, setFilterBy] = useState("");
+//   const [sortBy, setSortBy] = useState("");
+
+//   return (
+//     <FilterContext.Provider
+//       value={{ setFilterBy, filterBy, sortBy, setSortBy }}
+//     >
+//       {children}
+//     </FilterContext.Provider>
+//   );
+// }
+
+// function Option({ children, name }) {
+//   const { filterBy, setFilterBy } = useContext(FilterContext);
+//   return (
+//     <FilterButton
+//       active={name === filterBy}
+//       disabled={name === filterBy}
+//       onClick={() => setFilterBy(name)}
+//     >
+//       {children}
+//     </FilterButton>
+//   );
+// }
+
+// function Cotainer({ children }) {
+//   return <StyledFilter>{children}</StyledFilter>;
+// }
+
+// Filter.Option = Option;
+// Filter.Cotainer = Cotainer;
+
+// export default Filter;

@@ -1,23 +1,15 @@
-// import { useContext } from "react";
-
 import CabinRow from "./CabinRow";
 import Spinner from "../../ui/Spinner";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
-// import { FilterContext } from "../../ui/Filter";
+
 
 import { useCabins } from "./useCabins";
 
 
 function CabinTable() {
   const { isLoading, cabins } = useCabins();
-  // const { filterBy } = useContext(FilterContext);
 
-  // if (filterBy === "withDiscount") {
-  //   cabins = cabins.filter((cabin) => cabin.discount);
-  // } else if (filterBy === "noDiscount") {
-  //   cabins = cabins.filter((cabin) => !cabin.discount);
-  // }
   if (isLoading) return <Spinner />;
 
   return (

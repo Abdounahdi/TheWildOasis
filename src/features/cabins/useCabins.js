@@ -5,13 +5,14 @@ import { useSearchParams } from "react-router-dom";
 export function useCabins() {
   const [searchParams] = useSearchParams();
   const filterBy = searchParams.get("discount") || "all";
+  const sortBy = searchParams.get("sortBy");
   const {
     error,
     data: cabins,
     isLoading,
   } = useQuery({
-    queryKey: ["cabins", filterBy],
-    queryFn: () => getCabins(filterBy),
+    queryKey: ["cabins", filterBy, sortBy],
+    queryFn: () => getCabins(filterBy, sortBy),
   });
 
   return { isLoading, error, cabins };

@@ -1,4 +1,3 @@
-import { createContext, useContext, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -38,7 +37,7 @@ const FilterButton = styled.button`
 
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   if (!searchParams.get("discount")) {
     searchParams.set("discount", "all");
     setSearchParams(searchParams);

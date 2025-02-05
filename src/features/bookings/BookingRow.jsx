@@ -16,6 +16,7 @@ import {
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
+import { useNavigate } from "react-router-dom";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -65,6 +66,11 @@ function BookingRow({
   };
 
   const { isDeleting, deleteBooking } = useDeleteBooking();
+  const navigate = useNavigate();
+
+  const handleBookingDetails = function (id) {
+    navigate(`${id}`);
+  };
 
   return (
     <Table.Row>
@@ -95,11 +101,18 @@ function BookingRow({
         <Menus.Menu>
           <Menus.Toggle id={bookingId} />
           <Menus.List id={bookingId}>
-            <Menus.Button icon={<HiEye />}>See Details</Menus.Button>
+            <Menus.Button
+              icon={<HiEye />}
+              onClick={() => handleBookingDetails(bookingId)}
+            >
+              See Details
+            </Menus.Button>
             {status === "unconfirmed" ? (
-              <Menus.Button icon={<HiArrowUpOnSquare />}>Check In</Menus.Button>
-            ) : status === "checked-in" ? (
               <Menus.Button icon={<HiArrowDownOnSquare />}>
+                Check In
+              </Menus.Button>
+            ) : status === "checked-in" ? (
+              <Menus.Button icon={<HiArrowUpOnSquare />}>
                 Check Out
               </Menus.Button>
             ) : null}

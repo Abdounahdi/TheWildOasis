@@ -38,13 +38,13 @@ const FilterButton = styled.button`
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  if (!searchParams.get("discount")) {
-    searchParams.set("discount", "all");
+  if (!searchParams.get(filterField)) {
+    searchParams.set(filterField, "all");
     setSearchParams(searchParams);
   }
 
   function handleFilterBy(e) {
-    searchParams.set("discount", e.target.value);
+    searchParams.set(filterField, e.target.value);
     setSearchParams(searchParams);
   }
 
@@ -54,8 +54,8 @@ function Filter({ filterField, options }) {
         <FilterButton
           value={option.value}
           key={Math.random()}
-          active={option.value === searchParams.get("discount") ? "true" : ""}
-          disabled={option.value === searchParams.get("discount")}
+          active={option.value === searchParams.get(filterField) ? "true" : ""}
+          disabled={option.value === searchParams.get(filterField)}
           onClick={handleFilterBy}
         >
           {option.label}

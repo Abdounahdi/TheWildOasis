@@ -60,13 +60,12 @@ const PaginationButton = styled.button`
   }
 `;
 
-function Pagination({ children }) {
+function Pagination({ bookingsLength }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = searchParams.get("page") || 1;
   const perPage = searchParams.get("perPage") || 10;
 
-  const { bookingsLength } = useBookingsLength();
   const finalPage = Math.round(bookingsLength / Number(perPage));
 
   const start =
@@ -91,18 +90,21 @@ function Pagination({ children }) {
       setSearchParams(searchParams);
     }
   }
-
+  
   return (
     <StyledPagination>
       <P>
         Showing {start} to {end} from {bookingsLength} Results
       </P>
       <Buttons>
-        <PaginationButton disabled={page === 1} onClick={handlePrev}>
+        <PaginationButton disabled={Number(page) === 1} onClick={handlePrev}>
           <HiChevronLeft />
           Previous
         </PaginationButton>
-        <PaginationButton onClick={handleNext}>
+        <PaginationButton
+          onClick={handleNext}
+          disabled={Number(end) === bookingsLength}
+        >
           Next <HiChevronRight />
         </PaginationButton>
       </Buttons>

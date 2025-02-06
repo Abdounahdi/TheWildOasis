@@ -58,22 +58,20 @@ const PaginationButton = styled.button`
   }
 `;
 
-function Pagination({ bookingsLength }) {
+function Pagination({ length }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = searchParams.get("page") || 1;
   const perPage = searchParams.get("perPage") || 10;
 
-  const finalPage = Math.round(bookingsLength / Number(perPage));
+  const finalPage = Math.round(length / Number(perPage));
 
   const start =
     (Number(page) - 1) * Number(perPage) === 0
       ? 1
       : (Number(page) - 1) * Number(perPage);
   const end =
-    start + Number(perPage) >= bookingsLength
-      ? bookingsLength
-      : start + Number(perPage);
+    start + Number(perPage) >= length ? length : start + Number(perPage);
 
   function handleNext() {
     if (Number(page) !== finalPage) {
@@ -92,7 +90,7 @@ function Pagination({ bookingsLength }) {
   return (
     <StyledPagination>
       <P>
-        Showing {start} to {end} from {bookingsLength} Results
+        Showing {start} to {end} from {length} Results
       </P>
       <Buttons>
         <PaginationButton disabled={Number(page) === 1} onClick={handlePrev}>
@@ -101,7 +99,7 @@ function Pagination({ bookingsLength }) {
         </PaginationButton>
         <PaginationButton
           onClick={handleNext}
-          disabled={Number(end) === bookingsLength}
+          disabled={Number(end) === length}
         >
           Next <HiChevronRight />
         </PaginationButton>

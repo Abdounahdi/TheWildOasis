@@ -9,6 +9,12 @@ import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
 
 import { useMoveBack } from "../../hooks/useMoveBack";
+import { useParams } from "react-router-dom";
+import { useBookingId } from "./useBookings";
+import Spinner from "../../ui/Spinner";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useDeleteBooking } from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -17,9 +23,11 @@ const HeadingGroup = styled.div`
 `;
 
 function BookingDetail() {
-  const booking = {};
-  const status = "checked-in";
+  const { id: bookingId } = useParams();
+  const { isLoading, booking } = useBookingId(bookingId);
 
+  const { isDeleting, deleteBooking } = useDeleteBooking();
+  const status = booking?.status;
   const moveBack = useMoveBack();
 
   const statusToTagName = {
@@ -28,11 +36,13 @@ function BookingDetail() {
     "checked-out": "silver",
   };
 
+  if (isLoading) return <Spinner />;
+
   return (
     <>
       <Row type="horizontal">
         <HeadingGroup>
-          <Heading as="h1">Booking #X</Heading>
+          <Heading as="h1">Booking #{bookingId}</Heading>
           <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
@@ -41,9 +51,31 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
-        <Button variation="secondary" onClick={moveBack}>
+        <Modal>
+          <Modal.Open opens="deleteBooking">
+            <Button variation="danger">Delete Booking #{bookingId}</Button>
+          </Modal.Open>
+          <Modal.Window name="deleteBooking">
+            <ConfirmDelete
+              resourceName="Booking"
+              disabled={isDeleting}
+              onConfirm={() => {
+                deleteBooking(bookingId);
+                if (!isDeleting) {
+                  moveBack();
+                }
+              }}
+            />
+          </Modal.Window>
+        </Modal>
+        {status !== "checked-out" ? (
+          <Button variation="primary">
+            Check {status === "checked-in" ? "Out" : "In"}
+          </Button>
+        ) : null}
+        {/* <Button variation="secondary" onClick={moveBack}>
           Back
-        </Button>
+        </Button> */}
       </ButtonGroup>
     </>
   );

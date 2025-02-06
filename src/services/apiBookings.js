@@ -1,6 +1,46 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supaBase";
 
+export async function getBookings(filter, sortBy, page) {
+  let query = supabase
+    .from("bookings")
+    .select("* , cabins(*) , guests(*)", { count: "exact" });
+  // .range(start, end);
+
+  if (filter !== "all") {
+    query.eq("status", filter);
+    // query[filter === "withDiscount" ? "gt" : "eq"]("discount", 0);
+  }
+
+  if (sortBy) {
+    const [sortColumn, sortOrder] = sortBy.split("-");
+    query.order(sortColumn, { ascending: sortOrder === "asc" });
+  }
+
+  if (page) {
+    const from = (page - 1) * 10;
+    const to = from + 10 - 1;
+
+    query = query.range(from, to);
+  }
+
+  const { data, error, count } = await query;
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings Could not be loaded");
+  }
+
+  return { data, count };
+}
+
+export async function getBookingsLength() {
+  const { count } = await supabase
+    .from("bookings")
+    .select("*", { count: "exact" });
+
+  return count;
+}
+
 export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
@@ -85,7 +125,7 @@ export async function updateBooking(id, obj) {
   return data;
 }
 
-export async function deleteBooking(id) {
+export async function deleteBookingApi(id) {
   // REMEMBER RLS POLICIES
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 

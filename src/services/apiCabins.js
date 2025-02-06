@@ -21,6 +21,18 @@ export async function getCabins(filter, sortBy) {
   return data;
 }
 
+// export async function getCabinNameById(id) {
+//   const { data, error } = await supabase
+//     .from("cabins")
+//     .select("name")
+//     .eq("id", id);
+//   if (error) {
+//     console.error(error);
+//     throw new Error(`Cabin with the id of ${id} could not be loaded `);
+//   }
+//   return data;
+// }
+
 export async function deleteCabin(id) {
   const { data, error } = await supabase.from("cabins").delete().eq("id", id);
   if (error) {

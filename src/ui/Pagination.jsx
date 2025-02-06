@@ -1,4 +1,8 @@
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+
+import { useBookingsLength } from "../features/bookings/useBookings";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -55,3 +59,57 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+function Pagination({ bookingsLength }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page = searchParams.get("page") || 1;
+  const perPage = searchParams.get("perPage") || 10;
+
+  const finalPage = Math.round(bookingsLength / Number(perPage));
+
+  const start =
+    (Number(page) - 1) * Number(perPage) === 0
+      ? 1
+      : (Number(page) - 1) * Number(perPage);
+  const end =
+    start + Number(perPage) >= bookingsLength
+      ? bookingsLength
+      : start + Number(perPage);
+
+  function handleNext() {
+    if (Number(page) !== finalPage) {
+      searchParams.set("page", Number(page) + 1);
+      setSearchParams(searchParams);
+    }
+  }
+
+  function handlePrev() {
+    if (Number(page) !== 1) {
+      searchParams.set("page", Number(page) - 1);
+      setSearchParams(searchParams);
+    }
+  }
+  
+  return (
+    <StyledPagination>
+      <P>
+        Showing {start} to {end} from {bookingsLength} Results
+      </P>
+      <Buttons>
+        <PaginationButton disabled={Number(page) === 1} onClick={handlePrev}>
+          <HiChevronLeft />
+          Previous
+        </PaginationButton>
+        <PaginationButton
+          onClick={handleNext}
+          disabled={Number(end) === bookingsLength}
+        >
+          Next <HiChevronRight />
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  );
+}
+
+export default Pagination;

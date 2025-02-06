@@ -99,20 +99,20 @@ function CabinRow({ cabin }) {
               Duplicate
             </Menus.Button>
 
-            <Modal.Open opens="edit">
+            <Modal.Open opens="editCabin">
               <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
             </Modal.Open>
 
-            <Modal.Open opens="delete">
+            <Modal.Open opens="deleteCabin">
               <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
             </Modal.Open>
           </Menus.List>
 
-          <Modal.Window name="edit">
+          <Modal.Window name="editCabin">
             <CreateCabinForm editCabinData={cabin} />
           </Modal.Window>
 
-          <Modal.Window name="delete">
+          <Modal.Window name="deleteCabin">
             <ConfirmDelete
               resourceName="Cabin"
               disabled={isDeleting}

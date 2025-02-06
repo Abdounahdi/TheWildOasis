@@ -94,7 +94,7 @@ function Row({ children }) {
 }
 
 function Body({ data, render }) {
-  if (!data.length)
+  if (!data?.length)
     return (
       <Empty>
         <HiArchiveBoxXMark /> <span>No data to show at the moment !</span>

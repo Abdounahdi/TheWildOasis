@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import BookingDataBox from "./BookingDataBox";
@@ -7,13 +8,12 @@ import Tag from "../../ui/Tag";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
 import ButtonText from "../../ui/ButtonText";
-
-import { useMoveBack } from "../../hooks/useMoveBack";
-import { useParams } from "react-router-dom";
-import { useBookingId } from "./useBookings";
 import Spinner from "../../ui/Spinner";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+
+import { useMoveBack } from "../../hooks/useMoveBack";
+import { useBookingId } from "./useBookings";
 import { useDeleteBooking } from "./useDeleteBooking";
 
 const HeadingGroup = styled.div`
@@ -25,6 +25,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const { id: bookingId } = useParams();
   const { isLoading, booking } = useBookingId(bookingId);
+  const navigate = useNavigate();
 
   const { isDeleting, deleteBooking } = useDeleteBooking();
   const status = booking?.status;
@@ -35,6 +36,14 @@ function BookingDetail() {
     "checked-in": "green",
     "checked-out": "silver",
   };
+
+  function handleCheckInOut() {
+    if (status === "unconfirmed") {
+      navigate(`/checkin/${bookingId}`);
+    }else if(status === "checked-out"){
+      console.log("check out")
+    }
+  }
 
   if (isLoading) return <Spinner />;
 
@@ -69,7 +78,7 @@ function BookingDetail() {
           </Modal.Window>
         </Modal>
         {status !== "checked-out" ? (
-          <Button variation="primary">
+          <Button variation="primary" onClick={handleCheckInOut}>
             Check {status === "checked-in" ? "Out" : "In"}
           </Button>
         ) : null}

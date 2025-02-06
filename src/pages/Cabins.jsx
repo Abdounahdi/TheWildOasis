@@ -19,6 +19,7 @@ function Cabins() {
               { value: "noDiscount", label: "No Discount" },
             ]}
           />
+
           <SortBy
             options={[
               { value: "name-asc", label: "Sort by name (A-Z)" },

@@ -49,7 +49,6 @@ function CreateCabinForm({ editCabinData = {}, onCloseModal }) {
           },
         }
       );
-    // console.log({ ...newCabin });
   }
 
   function onError(error) {

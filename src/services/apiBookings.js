@@ -33,14 +33,6 @@ export async function getBookings(filter, sortBy, page) {
   return { data, count };
 }
 
-export async function getBookingsLength() {
-  const { count } = await supabase
-    .from("bookings")
-    .select("*", { count: "exact" });
-
-  return count;
-}
-
 export async function getBooking(id) {
   const { data, error } = await supabase
     .from("bookings")
@@ -110,7 +102,9 @@ export async function getStaysTodayActivity() {
   return data;
 }
 
-export async function updateBooking(id, obj) {
+export async function updateBooking(payload) {
+  const { obj, id } = payload;
+
   const { data, error } = await supabase
     .from("bookings")
     .update(obj)

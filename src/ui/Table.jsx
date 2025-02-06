@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
-import { HiArchiveBoxXMark } from "react-icons/hi2";
 import styled from "styled-components";
+import { HiArchiveBoxXMark } from "react-icons/hi2";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);

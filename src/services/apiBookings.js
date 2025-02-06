@@ -1,9 +1,11 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supaBase";
 
-export async function getBookings(filter, sortBy, pageNum) {
-  let query = supabase.from("bookings").select("* , cabins(*) , guests(*)");
-  // .range(pageNum - 1, pageNum + 9);
+export async function getBookings(filter, sortBy, start = 0, end = 10) {
+  let query = supabase
+    .from("bookings")
+    .select("* , cabins(*) , guests(*)")
+    .range(start, end);
 
   if (filter !== "all") {
     query.eq("status", filter);
@@ -29,8 +31,6 @@ export async function getBookingsLength() {
   const { count } = await supabase
     .from("bookings")
     .select("*", { count: "exact" });
-
-  console.log(count);
 
   return count;
 }

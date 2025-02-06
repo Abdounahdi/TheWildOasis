@@ -11,13 +11,18 @@ export function useBookings() {
   const [searchParams] = useSearchParams();
   const filterBy = searchParams.get("status") || "all";
   const sortBy = searchParams.get("sortBy");
+  const pageNum = searchParams.get("page") || 1;
+  const perPage = searchParams.get("perPage") || 10;
+  const start = (Number(pageNum) - 1) * Number(perPage);
+  const end = (Number(pageNum) - 1) * Number(perPage) + Number(perPage)-1;
+
   const {
     error,
     data: bookings,
     isLoading,
   } = useQuery({
-    queryKey: ["bookings", filterBy, sortBy],
-    queryFn: () => getBookings(filterBy, sortBy),
+    queryKey: ["bookings", filterBy, sortBy, start, end],
+    queryFn: () => getBookings(filterBy, sortBy, start, end),
   });
 
   return { isLoading, error, bookings };

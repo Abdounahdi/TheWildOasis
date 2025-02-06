@@ -1,11 +1,8 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { getBookingsLength } from "../services/apiBookings";
+
 import { useBookingsLength } from "../features/bookings/useBookings";
-import Spinner from "./Spinner";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -65,54 +62,47 @@ const PaginationButton = styled.button`
 
 function Pagination({ children }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [disabled, setDisabled] = useState("");
 
-  const { isLoading, bookingsLength } = useBookingsLength();
-  if (isLoading) return <Spinner />;
+  const page = searchParams.get("page") || 1;
+  const perPage = searchParams.get("perPage") || 10;
 
-  if (!searchParams.get("page")) {
-    searchParams.set("page", 1);
-    setSearchParams(searchParams);
+  const { bookingsLength } = useBookingsLength();
+  const finalPage = Math.round(bookingsLength / Number(perPage));
+
+  const start =
+    (Number(page) - 1) * Number(perPage) === 0
+      ? 1
+      : (Number(page) - 1) * Number(perPage);
+  const end =
+    start + Number(perPage) >= bookingsLength
+      ? bookingsLength
+      : start + Number(perPage);
+
+  function handleNext() {
+    if (Number(page) !== finalPage) {
+      searchParams.set("page", Number(page) + 1);
+      setSearchParams(searchParams);
+    }
   }
 
-  const pageNum = searchParams.get("page");
-
-  function handlePagination(to) {
-    console.log(bookingsLength / 10);
-    if (to === "next") {
-      if (pageNum < Math.round(bookingsLength / 10)) {
-        searchParams.set("page", Number(pageNum) + 1);
-      } else {
-        setDisabled("next");
-      }
-    } else {
-      if (pageNum > 1) {
-        searchParams.set("page", Number(pageNum) - 1);
-      } else {
-        setDisabled("prev");
-      }
+  function handlePrev() {
+    if (Number(page) !== 1) {
+      searchParams.set("page", Number(page) - 1);
+      setSearchParams(searchParams);
     }
-    setSearchParams(searchParams);
   }
 
   return (
     <StyledPagination>
       <P>
-        Showing {pageNum} to {Number(pageNum) + 10} from {bookingsLength}{" "}
-        Results
+        Showing {start} to {end} from {bookingsLength} Results
       </P>
       <Buttons>
-        <PaginationButton
-          onClick={() => handlePagination("prev")}
-          disabled={disabled === "prev"}
-        >
+        <PaginationButton disabled={page === 1} onClick={handlePrev}>
           <HiChevronLeft />
           Previous
         </PaginationButton>
-        <PaginationButton
-          onClick={() => handlePagination("next")}
-          disabled={disabled === "next"}
-        >
+        <PaginationButton onClick={handleNext}>
           Next <HiChevronRight />
         </PaginationButton>
       </Buttons>

@@ -72,14 +72,6 @@ function BookingRow({
     navigate(`${id}`);
   };
 
-  function handleCheckInOut() {
-    if (status === "unconfirmed") {
-      navigate(`/checkin/${bookingId}`);
-    } else if (status === "checked-out") {
-      console.log("check out");
-    }
-  }
-
   return (
     <Table.Row>
       <Cabin>{cabinName}</Cabin>
@@ -116,7 +108,10 @@ function BookingRow({
               See Details
             </Menus.Button>
             {status === "unconfirmed" ? (
-              <Menus.Button icon={<HiArrowDownOnSquare />} onClick={handleCheckInOut}>
+              <Menus.Button
+                icon={<HiArrowDownOnSquare />}
+                onClick={() => navigate(`/checkin/${bookingId}`)}
+              >
                 Check In
               </Menus.Button>
             ) : status === "checked-in" ? (

@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
+
 import {
   getBooking,
   getBookings,
-  getBookingsLength,
 } from "../../services/apiBookings";
-import { useSearchParams } from "react-router-dom";
 
 export function useBookings() {
   const [searchParams] = useSearchParams();
@@ -32,17 +32,4 @@ export function useBookingId(id) {
   });
 
   return { isLoading, error, booking };
-}
-
-export function useBookingsLength() {
-  const {
-    error,
-    data: bookingsLength,
-    isLoading,
-  } = useQuery({
-    queryKey: ["bookingsLength"],
-    queryFn: getBookingsLength,
-  });
-
-  return { isLoading, error, bookingsLength };
 }

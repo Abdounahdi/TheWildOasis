@@ -123,69 +123,6 @@ function CabinRow({ cabin }) {
       </Modal>
     </TableRow>
   );
-  // return (
-  //   <TableRow role="row ">
-  //     <Img src={image} alt={`Image of Cabin ${cabinId}`} />
-  //     <Cabin>{name}</Cabin>
-  //     <div>Fits up to {maxCapacity} guests</div>
-  //     <Price>{formatCurrency(regularPrice)}</Price>
-  //     {discount ? (
-  //       <Discount>{formatCurrency(discount)}</Discount>
-  //     ) : (
-  //       <span>&mdash;</span>
-  //     )}
-
-  //     {/* buttons */}
-
-  //     <Row type="horizontal">
-  //       <Modal>
-  //         <Button
-  //           disabled={isCreating}
-  //           onClick={handleDuplicate}
-  //           variation="secondary"
-  //           size="medium"
-  //         >
-  //           <HiSquare2Stack />
-  //         </Button>
-
-  //         <Modal.Open opens="edit">
-  //           <Button variation="secondary" size="medium">
-  //             <HiPencil />
-  //           </Button>
-  //         </Modal.Open>
-  //         <Modal.Window name="edit">
-  //           <CreateCabinForm editCabinData={cabin} />
-  //         </Modal.Window>
-
-  //         <Modal.Open opens="delete">
-  //           <Button variation="danger" size="medium" disabled={isDeleting}>
-  //             <HiTrash />
-  //           </Button>
-  //         </Modal.Open>
-  //         <Modal.Window name="delete">
-  //           <ConfirmDelete
-  //             resourceName="Cabin"
-  //             disabled={isDeleting}
-  //             onConfirm={() => deleteCabin(cabinId)}
-  //           />
-  //         </Modal.Window>
-  //       </Modal>
-
-  //       <Menus.Menu>
-  //         <Menus.Toggle id={cabinId} />
-  //         <Menus.List id={cabinId}>
-  //           <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
-  //             Duplicate
-  //           </Menus.Button>
-
-  //           <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
-
-  //           <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-  //         </Menus.List>
-  //       </Menus.Menu>
-  //     </Row>
-  //   </TableRow>
-  // );
 }
 
 export default CabinRow;

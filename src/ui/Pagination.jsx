@@ -1,8 +1,6 @@
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-
-import { useBookingsLength } from "../features/bookings/useBookings";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -90,7 +88,7 @@ function Pagination({ bookingsLength }) {
       setSearchParams(searchParams);
     }
   }
-  
+
   return (
     <StyledPagination>
       <P>

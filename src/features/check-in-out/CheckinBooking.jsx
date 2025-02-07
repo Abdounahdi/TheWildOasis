@@ -16,6 +16,7 @@ import { formatCurrency } from "../../utils/helpers";
 import { useEffect, useState } from "react";
 import { useSettings } from "../settings/useSettings";
 import { useUpdateBooking } from "../bookings/useUpdateBooking";
+import toast from "react-hot-toast";
 
 const Box = styled.div`
   /* Box */
@@ -48,6 +49,13 @@ function CheckinBooking() {
   );
 
   if (isLoadingBooking || isLoadingSettings) return <Spinner />;
+
+  // just to be safe , i added this small level of security
+  if (booking.status !== "unconfirmed") {
+    toast.error(`Booking #${booking.id} is Already checked in ! `);
+    console.log("hi");
+    navigate("/bookings");
+  }
 
   const {
     id: bookingId,
@@ -109,9 +117,7 @@ function CheckinBooking() {
           >
             I confirm that <FocusedInfo>{guests.fullName}</FocusedInfo> has paid
             the total amount of{" "}
-            <FocusedInfo>
-              {formatCurrency(finalPrice)}
-            </FocusedInfo>
+            <FocusedInfo>{formatCurrency(finalPrice)}</FocusedInfo>
             {addBreakfast
               ? `(${formatCurrency(
                   totalPrice - breakfastPrice

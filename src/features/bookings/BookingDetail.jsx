@@ -40,8 +40,8 @@ function BookingDetail() {
   function handleCheckInOut() {
     if (status === "unconfirmed") {
       navigate(`/checkin/${bookingId}`);
-    }else if(status === "checked-out"){
-      console.log("check out")
+    } else if (status === "checked-in") {
+      navigate(`/checkout/${bookingId}`);
     }
   }
 

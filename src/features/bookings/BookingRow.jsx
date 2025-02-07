@@ -115,7 +115,10 @@ function BookingRow({
                 Check In
               </Menus.Button>
             ) : status === "checked-in" ? (
-              <Menus.Button icon={<HiArrowUpOnSquare />}>
+              <Menus.Button
+                icon={<HiArrowUpOnSquare />}
+                onClick={() => navigate(`/checkout/${bookingId}`)}
+              >
                 Check Out
               </Menus.Button>
             ) : null}

@@ -13,6 +13,8 @@ import { useMoveBack } from "../../hooks/useMoveBack";
 import Button from "../../ui/Button";
 import { useUpdateBooking } from "../bookings/useUpdateBooking";
 import { useState } from "react";
+import ButtonGroup from "../../ui/ButtonGroup";
+import toast from "react-hot-toast";
 
 const Box = styled.div`
   /* Box */
@@ -50,6 +52,12 @@ function CheckOutBooking() {
 
   if (isLoading) return <Spinner />;
 
+  // just to be sure i added this level of security :
+  if (booking.status !== "checked-in") {
+    // toast.error(`Booking #${booking.id} is Already checked in ! `);
+    navigate("/bookings");
+  }
+
   return (
     <>
       <Row type="horizontal">
@@ -69,11 +77,11 @@ function CheckOutBooking() {
           />
         </Row>
       </Box>
-      <div>
+      <ButtonGroup>
         <Button varitation="primary" onClick={handleCheckOut}>
           {isUpdating ? "Cheking out ... " : "Check Out"}
         </Button>
-      </div>
+      </ButtonGroup>
     </>
   );
 }

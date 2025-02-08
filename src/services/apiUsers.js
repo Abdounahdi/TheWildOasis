@@ -13,7 +13,21 @@ export async function createUserApi(newUser) {
 
   if (error) {
     console.error(error);
-    throw new Error("Bookings Could not be loaded");
+    throw new Error("User Could not be created");
+  }
+
+  return { data, error };
+}
+
+export async function loginUserApi(obj) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: obj.email,
+    password: obj.password,
+  });
+
+  if (error) {
+    console.error(error);
+    throw new Error("User is not Valid");
   }
 
   return { data, error };

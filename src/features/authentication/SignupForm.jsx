@@ -16,8 +16,9 @@ function SignupForm() {
   const { isCreating, createUser } = useCreateUser();
 
   function onSubmit(newObj) {
-    createUser(newObj);
-    reset();
+    createUser(newObj, {
+      onSuccess: () => reset(),
+    });
   }
 
   function onError(error) {
@@ -32,6 +33,7 @@ function SignupForm() {
           type="text"
           id="fullName"
           {...register("fullName", { required: "This field is required" })}
+          disabled={isCreating}
         />
       </FormRow>
 
@@ -42,6 +44,7 @@ function SignupForm() {
           {...register("email", {
             required: "This field is required",
           })}
+          disabled={isCreating}
         />
       </FormRow>
 
@@ -59,6 +62,7 @@ function SignupForm() {
               message: "Your password must be at least 8 characters",
             },
           })}
+          disabled={isCreating}
         />
       </FormRow>
 
@@ -71,6 +75,7 @@ function SignupForm() {
             validate: (value) =>
               value === getValues("password") || "Passwords need to match",
           })}
+          disabled={isCreating}
         />
       </FormRow>
 

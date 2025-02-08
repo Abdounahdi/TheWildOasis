@@ -3,7 +3,6 @@ import { createUserApi } from "../../services/apiUsers";
 import toast from "react-hot-toast";
 
 export function useCreateUser() {
-  // const queryClient = useQueryClient();
 
   const { isLoading: isCreating, mutate: createUser } = useMutation({
     mutationFn: createUserApi,

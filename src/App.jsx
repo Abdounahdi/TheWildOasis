@@ -28,17 +28,12 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Query dev tools to manage fetching data  */}
       <ReactQueryDevtools initialIsOpen={false} />
 
-      {/* globalStyles , to use colors and define the main styles  */}
       <GlobalStyles />
 
-      {/* the main routes where every element is linked to a specifique url */}
       <BrowserRouter>
-        {/* Possible Routes */}
         <Routes>
-          {/* app layout will always be there , it gets the ability to show outlet (the elemnt where route takes us ) just like children */}
           <Route element={<AppLayout />}>
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
@@ -54,14 +49,11 @@ function App() {
             <Route path="account" element={<Account />} />
           </Route>
 
-          {/* these are rendered outside the applayout element  */}
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
 
-      {/* third party library , a component like the ones we've created along this project
-      job? : notification for the user */}
       <Toaster
         position="top-center"
         gutter={12}

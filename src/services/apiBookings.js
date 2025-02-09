@@ -1,7 +1,7 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supaBase";
 
-export async function getBookings(filter, sortBy, page) {
+export async function getBookings(filter, sortBy, page ) {
   let query = supabase
     .from("bookings")
     .select("* , cabins(*) , guests(*)", { count: "exact" });

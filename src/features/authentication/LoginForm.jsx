@@ -17,14 +17,13 @@ function LoginForm() {
   const { errors } = formState;
 
   function onSumbit(obj) {
-    loginUser(obj);
-    navigate("/");
+    loginUser(obj, { onSuccess: () => navigate("/") });
   }
 
   function onError(error) {
     console.error(errors);
     console.error(error);
-}
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSumbit, onError)}>

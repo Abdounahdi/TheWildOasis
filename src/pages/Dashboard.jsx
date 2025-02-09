@@ -1,22 +1,20 @@
 import { HiOutlineBriefcase, HiOutlineChartBar } from "react-icons/hi";
-import {
-  DashboardNumbers,
-  StyledDashboardLayout,
-} from "../features/dashboard/DashboardLayout";
+import StyledDashboardLayout from "../features/dashboard/DashboardLayout";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import { HiCalendarDays, HiOutlineBanknotes } from "react-icons/hi2";
+import DashboardStats from "../features/dashboard/DashboardStats";
+import DashboardFilter from "../features/dashboard/DashboardFilter";
 
 function Dashboard() {
-
   return (
     <>
       <Row type="horizontal">
         <Heading as="h1">Dashboard</Heading>
-        <p>Test</p>
+        <DashboardFilter />
       </Row>
       <StyledDashboardLayout>
-        <DashboardNumbers
+        <DashboardStats
           options={[
             {
               value: "bookings/length",

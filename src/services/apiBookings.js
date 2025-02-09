@@ -1,7 +1,7 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supaBase";
 
-export async function getBookings(filter, sortBy, page ) {
+export async function getBookings(filter, sortBy, page) {
   let query = supabase
     .from("bookings")
     .select("* , cabins(*) , guests(*)", { count: "exact" });
@@ -52,7 +52,7 @@ export async function getBooking(id) {
 export async function getBookingsAfterDate(date) {
   const { data, error } = await supabase
     .from("bookings")
-    .select("created_at, totalPrice, extrasPrice")
+    .select("created_at, totalPrice, extrasPrice , status")
     .gte("created_at", date)
     .lte("created_at", getToday({ end: true }));
 

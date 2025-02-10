@@ -7,7 +7,7 @@ export function useLoginUser() {
   const { isLoading: isLogging, mutate: loginUser } = useMutation({
     mutationFn: loginUserApi,
     onSuccess: () => {
-      toast.success("Welcome Abderrahmen Nahdi ! ");
+      toast.success("Welcome ! ");
     },
     onError: () => {
       toast.error("Oops , check your Login details ! ");

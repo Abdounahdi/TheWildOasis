@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 
 import Header from "./Header";
 import SideBar from "./SideBar";
+import AuthProvider from "../features/authentication/authContext";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -39,6 +40,7 @@ function AppLayout() {
         <SideBar />
         <Main>
           <Container>
+            <AuthProvider></AuthProvider>
             <Outlet />
           </Container>
         </Main>

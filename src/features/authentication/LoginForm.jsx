@@ -5,11 +5,11 @@ import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
 
-import { useLoginUser } from "./useLoginUser";
+import { useLoginUser } from "./userLoginUser";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
-  const { getValues, register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState } = useForm();
   const navigate = useNavigate();
 
   const { isLogging, loginUser } = useLoginUser();

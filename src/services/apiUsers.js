@@ -30,5 +30,7 @@ export async function loginUserApi(obj) {
     throw new Error("User is not Valid");
   }
 
+  console.log(data)
+
   return { data, error };
 }

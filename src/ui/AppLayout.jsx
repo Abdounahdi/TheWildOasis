@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import { motion } from "motion/react";
 
 import Header from "./Header";
 import SideBar from "./SideBar";
@@ -27,15 +28,22 @@ const Container = styled.div`
 
 function AppLayout() {
   return (
-    <StyledAppLayout>
-      <Header />
-      <SideBar />
-      <Main>
-        <Container>
-          <Outlet />
-        </Container>
-      </Main>
-    </StyledAppLayout>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.3 }}
+    >
+      <StyledAppLayout>
+        <Header />
+        <SideBar />
+        <Main>
+          <Container>
+            <Outlet />
+          </Container>
+        </Main>
+      </StyledAppLayout>
+    </motion.div>
   );
 }
 

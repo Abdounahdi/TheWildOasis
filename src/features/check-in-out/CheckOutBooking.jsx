@@ -74,6 +74,7 @@ function CheckOutBooking() {
           <Textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
+            placeholder="Don't hesitate to give us some remarks ... "
           />
         </Row>
       </Box>

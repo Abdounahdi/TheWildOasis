@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Stat from "./Stat";
+import { useBookingsAfterDate } from "../bookings/useBookings";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -6,3 +8,5 @@ const StyledDashboardLayout = styled.div`
   grid-template-rows: auto 34rem auto;
   gap: 2.4rem;
 `;
+
+export default StyledDashboardLayout;

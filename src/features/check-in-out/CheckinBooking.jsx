@@ -120,7 +120,7 @@ function CheckinBooking() {
             <FocusedInfo>{formatCurrency(finalPrice)}</FocusedInfo>
             {addBreakfast
               ? `(${formatCurrency(
-                  totalPrice - breakfastPrice
+                  finalPrice - breakfastPrice
                 )} + ${formatCurrency(breakfastPrice)})`
               : ""}
           </Checkbox>

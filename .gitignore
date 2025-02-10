@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# so i can work on both mac and windows 
+package.json
+package-lock.json

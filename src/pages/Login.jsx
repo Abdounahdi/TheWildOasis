@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { motion } from "motion/react";
+
 import LoginForm from "../features/authentication/LoginForm";
 import Logo from "../ui/Logo";
 import Heading from "../ui/Heading";
@@ -22,13 +24,20 @@ const HeaderRow = styled.div`
 
 function Login() {
   return (
-    <LoginLayout>
-      <HeaderRow>
-        <Logo />
-        <Heading>Login To Your Account</Heading>
-      </HeaderRow>
-      <LoginForm />
-    </LoginLayout>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.3 }}
+    >
+      <LoginLayout>
+        <HeaderRow>
+          <Logo />
+          <Heading>Login To Your Account</Heading>
+        </HeaderRow>
+        <LoginForm />
+      </LoginLayout>
+    </motion.div>
   );
 }
 

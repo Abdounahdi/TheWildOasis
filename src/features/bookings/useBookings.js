@@ -4,7 +4,9 @@ import { useSearchParams } from "react-router-dom";
 import {
   getBooking,
   getBookings,
+  getBookingsAfterDate,
 } from "../../services/apiBookings";
+import { getToday, getTodayMinus } from "../../utils/helpers";
 
 export function useBookings() {
   const [searchParams] = useSearchParams();
@@ -32,4 +34,26 @@ export function useBookingId(id) {
   });
 
   return { isLoading, error, booking };
+}
+
+export function useBookingsAfterDate() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  if (!searchParams.get("last")) {
+    searchParams.set("last", 7);
+    setSearchParams(searchParams);
+  }
+
+  const date = getTodayMinus(searchParams.get("last"));
+
+  const {
+    error,
+    data: bookings,
+    isLoading,
+  } = useQuery({
+    queryKey: ["bookingsAfterDate", date],
+    queryFn: () => getBookingsAfterDate(date),
+  });
+
+  return { isLoading, error, bookings };
 }

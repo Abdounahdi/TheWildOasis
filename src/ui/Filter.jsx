@@ -39,7 +39,7 @@ function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   if (!searchParams.get(filterField)) {
-    searchParams.set(filterField, "all");
+    searchParams.set(filterField, options[0].value);
     setSearchParams(searchParams);
   }
 

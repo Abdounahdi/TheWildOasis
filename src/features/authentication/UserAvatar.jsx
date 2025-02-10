@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { authContext } from "./authContext";
 
 const StyledUserAvatar = styled.div`
   display: flex;
@@ -19,3 +21,19 @@ const Avatar = styled.img`
   border-radius: 50%;
   outline: 2px solid var(--color-grey-100);
 `;
+
+function UserAvatar() {
+  const contextAuth = useContext(authContext);
+  const userName = contextAuth.user?.user_metadata?.full_name;
+  const image = contextAuth.user?.user_metadata?.image;
+  console.log(contextAuth);
+
+  return (
+    <StyledUserAvatar>
+      <Avatar src={image} />
+      {userName}
+    </StyledUserAvatar>
+  );
+}
+
+export default UserAvatar;

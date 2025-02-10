@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Stat from "./Stat";
-import { useBookingsAfterDate } from "../bookings/useBookings";
 
 const StyledDashboardLayout = styled.div`
   display: grid;

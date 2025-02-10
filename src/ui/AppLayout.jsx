@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "motion/react";
 
 import Header from "./Header";
 import SideBar from "./SideBar";
-import AuthProvider from "../features/authentication/authContext";
+import { useContext, useEffect } from "react";
+import { authContext } from "../features/authentication/authContext";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -28,6 +29,18 @@ const Container = styled.div`
 `;
 
 function AppLayout() {
+  const navigate = useNavigate();
+  const context = useContext(authContext);
+
+  useEffect(
+    function () {
+      if (!(context?.user?.aud === "authenticated")) {
+        navigate("/login");
+      }
+    },
+    [context, navigate]
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -40,7 +53,6 @@ function AppLayout() {
         <SideBar />
         <Main>
           <Container>
-            <AuthProvider></AuthProvider>
             <Outlet />
           </Container>
         </Main>

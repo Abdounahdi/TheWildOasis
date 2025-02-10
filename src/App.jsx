@@ -16,6 +16,7 @@ import { Toaster } from "react-hot-toast";
 import BookingDetail from "./features/bookings/BookingDetail";
 import CheckinBooking from "./features/check-in-out/CheckinBooking";
 import CheckOutBooking from "./features/check-in-out/CheckOutBooking";
+import { AuthProvider } from "./features/authentication/authContext.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,7 +35,13 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <AuthProvider>
+                <AppLayout />
+              </AuthProvider>
+            }
+          >
             <Route index element={<Navigate replace to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
 
@@ -49,7 +56,14 @@ function App() {
             <Route path="account" element={<Account />} />
           </Route>
 
-          <Route path="login" element={<Login />} />
+          <Route
+            path="login"
+            element={
+              <AuthProvider>
+                <Login />
+              </AuthProvider>
+            }
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

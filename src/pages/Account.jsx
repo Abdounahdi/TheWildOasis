@@ -1,6 +1,7 @@
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import UpdateUserDataForm from "../features/authentication/UpdateUserDataForm.jsx";
+import UpdatePasswordForm from "../features/authentication/UpdatePasswordForm.jsx";
 
 function Account() {
   return (
@@ -9,12 +10,12 @@ function Account() {
 
       <Row>
         <Heading as="h3">Update user data</Heading>
-        <UpdateUserDataForm></UpdateUserDataForm>
+        <UpdateUserDataForm />
       </Row>
 
       <Row>
         <Heading as="h3">Update password</Heading>
-        <p>Update user password form</p>
+        <UpdatePasswordForm />
       </Row>
     </>
   );

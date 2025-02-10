@@ -7,7 +7,6 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { authContext } from "./authContext";
 import { useUpdateUser } from "./useUpdateUser";
-import { updateUserApi } from "../../services/apiUsers";
 
 function UpdateUserDataForm() {
   // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
@@ -22,7 +21,6 @@ function UpdateUserDataForm() {
   const email = userContext.user.user_metadata?.email;
   const currentFullName = userContext.user.user_metadata?.full_name;
   const signIn = userContext.signIn;
-  const { updateUserState } = userContext;
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);

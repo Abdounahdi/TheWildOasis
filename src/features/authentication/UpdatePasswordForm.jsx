@@ -4,16 +4,16 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
-import { useUpdateUser } from "./useUpdateUser";
+import { useUpdatePass } from "./useUpdateUser";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
 
-  const { updateUser, isUpdating } = useUpdateUser();
+  const { updatePass, isUpdating } = useUpdatePass();
 
   function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset });
+    updatePass({ password }, { onSuccess: reset });
   }
 
   return (

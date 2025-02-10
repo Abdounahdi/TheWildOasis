@@ -49,7 +49,7 @@ export async function updateUserApi({
   avatar: avatarIsAdded = false,
   ...remained
 }) {
-  const { newUser } = remained; 
+  const { newUser } = remained;
 
   const imageName = avatarIsAdded
     ? `${Math.random()}-${newUser.user_metadata.image.name}`.replaceAll("/", "")
@@ -57,7 +57,6 @@ export async function updateUserApi({
   const imagePath = avatarIsAdded
     ? `${supabaseUrl}/storage/v1/object/public/avatars//${imageName}`
     : newUser.user_metadata.image;
-
 
   const { data, error } = await supabase.auth.updateUser({
     data: {
@@ -76,6 +75,16 @@ export async function updateUserApi({
     if (storageError) throw new Error("your picture could not be loaded ");
   }
 
-  
   return data;
+}
+
+export async function updateUserPassApi(newPass) {
+  const { error } = await supabase.auth.updateUser({
+    password: newPass,
+  });
+
+  if (error) {
+    console.error(error);
+    throw new Error("User is not Valid");
+  }
 }

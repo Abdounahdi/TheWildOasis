@@ -1,20 +1,11 @@
-import Spinner from "../../ui/Spinner";
-import { formatCurrency } from "../../utils/helpers";
-import { useBookingsAfterDate } from "../bookings/useBookings";
-import { useCabins } from "../cabins/useCabins";
 import Stat from "./Stat";
 
-function DashboardStats({ options }) {
+import { formatCurrency } from "../../utils/helpers";
+
+function DashboardStats({ options, bookings, cabins }) {
   // the logic behind getting those values (in terms of coding this is not good ) ;
 
   const values = [];
-
-  const { isLoading: isLoadingBookings, bookings } = useBookingsAfterDate();
-  const { isLoading: isLoadingCabins, cabins } = useCabins();
-
-  const isLoading = isLoadingBookings || isLoadingCabins;
-
-  if (isLoading) return <Spinner />;
 
   values[0] = bookings.length;
   values[1] = formatCurrency(

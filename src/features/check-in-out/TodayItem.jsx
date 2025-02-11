@@ -25,7 +25,6 @@ const Guest = styled.div`
 `;
 
 function TodayItem({ booking }) {
-  console.log(booking);
   const {
     status,
     startDate,

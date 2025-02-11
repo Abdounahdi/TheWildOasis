@@ -5,6 +5,7 @@ import {
   getBooking,
   getBookings,
   getBookingsAfterDate,
+  getStaysTodayActivity,
 } from "../../services/apiBookings";
 import { getToday, getTodayMinus } from "../../utils/helpers";
 
@@ -56,4 +57,17 @@ export function useBookingsAfterDate() {
   });
 
   return { isLoading, error, bookings };
+}
+
+export function useBookingsToday() {
+  const {
+    error,
+    data: bookingsToday,
+    isLoading,
+  } = useQuery({
+    queryKey: ["bookingsToday"],
+    queryFn: getStaysTodayActivity,
+  });
+
+  return { isLoading, error, bookingsToday };
 }

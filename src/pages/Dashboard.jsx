@@ -5,6 +5,7 @@ import Row from "../ui/Row";
 import { HiCalendarDays, HiOutlineBanknotes } from "react-icons/hi2";
 import DashboardStats from "../features/dashboard/DashboardStats";
 import DashboardFilter from "../features/dashboard/DashboardFilter";
+import Today from "../features/check-in-out/TodayActivity";
 
 function Dashboard() {
   return (
@@ -42,10 +43,10 @@ function Dashboard() {
             },
           ]}
         />
+        <Today/>
       </StyledDashboardLayout>
     </>
   );
 }
 
 export default Dashboard;
-

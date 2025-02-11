@@ -1,5 +1,15 @@
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import Heading from "../../ui/Heading";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -57,3 +67,41 @@ const colors = isDarkMode
       text: "#374151",
       background: "#fff",
     };
+
+function SalesChart({ bookings }) {
+  return (
+    <StyledSalesChart>
+      <Heading as="h2">Sales from May 25 2023 — May 31 2023</Heading>
+      <ResponsiveContainer width="100%" height={300}>
+        <AreaChart
+          data={fakeData}
+          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
+
+          <XAxis
+            dataKey="label"
+            tick={{ fontSize: 12, fill: "#555" }}
+            dy={10}
+          />
+          <YAxis />
+          <Tooltip />
+          <Area
+            type="monotone"
+            dataKey="totalSales"
+            stroke="blue"
+            fill="lightblue"
+          />
+          <Area
+            type="monotone"
+            dataKey="extrasSales"
+            stroke="green"
+            fill="lightgreen"
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </StyledSalesChart>
+  );
+}
+
+export default SalesChart;

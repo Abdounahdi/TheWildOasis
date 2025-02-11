@@ -10,6 +10,7 @@ import {
 } from "../bookings/useBookings";
 import Spinner from "../../ui/Spinner";
 import { useCabins } from "../cabins/useCabins";
+import SalesChart from "./SalesChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -67,6 +68,7 @@ function DashboardLayout() {
             booking.status === "checked-in" || booking.status === "checked-out"
         )}
       />
+      <SalesChart bookings={bookings} />
     </StyledDashboardLayout>
   );
 }

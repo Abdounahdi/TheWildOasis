@@ -13,7 +13,7 @@ function UpdatePasswordForm() {
   const { updatePass, isUpdating } = useUpdatePass();
 
   function onSubmit({ password }) {
-    updatePass({ password }, { onSuccess: reset });
+    updatePass(password, { onSuccess: reset });
   }
 
   return (
@@ -57,7 +57,9 @@ function UpdatePasswordForm() {
         <Button onClick={reset} type="reset" variation="secondary">
           Cancel
         </Button>
-        <Button disabled={isUpdating}>Update password</Button>
+        <Button disabled={isUpdating}>
+          {isUpdating ? "Updating ..." : "Update password"}
+        </Button>
       </FormRow>
     </Form>
   );

@@ -26,7 +26,6 @@ function UserAvatar() {
   const contextAuth = useContext(authContext);
   const userName = contextAuth.user?.user_metadata?.full_name;
   const image = contextAuth.user?.user_metadata?.image;
-  console.log(contextAuth);
 
   return (
     <StyledUserAvatar>

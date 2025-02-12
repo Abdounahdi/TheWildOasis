@@ -1,5 +1,16 @@
 import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import Heading from "../../ui/Heading";
+import { useDarkModeContext } from "../../ui/DarkModeToggle";
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -43,17 +54,57 @@ const fakeData = [
   { label: "Feb 06", totalSales: 1450, extrasSales: 400 },
 ];
 
-const isDarkMode = true;
-const colors = isDarkMode
-  ? {
-      totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
-      extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
-      text: "#e5e7eb",
-      background: "#18212f",
-    }
-  : {
-      totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-      extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
-      text: "#374151",
-      background: "#fff",
-    };
+// let isDarkMode = localStorage.getItem("isDark") === "true";
+
+function SalesChart({ bookings }) {
+  const { isDarkMode } = useDarkModeContext();
+  const colors = isDarkMode
+    ? {
+        totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
+        extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
+        text: "#e5e7eb",
+        background: "#18212f",
+      }
+    : {
+        totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
+        extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
+        text: "#374151",
+        background: "#fff",
+      };
+  return (
+    <StyledSalesChart>
+      <Heading as="h2">Sales from May 25 2023 — May 31 2023</Heading>
+      <ResponsiveContainer width="100%" height={300}>
+        <AreaChart
+          data={fakeData}
+          // margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke={colors.background} />
+
+          <XAxis
+            dataKey="label"
+            tick={{ fontSize: 12, fill: colors.text }}
+            dy={10}
+            tickFormatter={(value, index) => (index % 2 === 0 ? value : "")}
+          />
+          <YAxis tick={{ fill: colors.text }} unit="$" />
+          <Tooltip contentStyle={{ backgroundColor: colors.background }} />
+          <Area
+            type="monotone"
+            dataKey="totalSales"
+            stroke={colors.totalSales.stroke}
+            fill={colors.totalSales.fill}
+          />
+          <Area
+            type="monotone"
+            dataKey="extrasSales"
+            stroke={colors.extrasSales.stroke}
+            fill={colors.extrasSales.fill}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </StyledSalesChart>
+  );
+}
+
+export default SalesChart;

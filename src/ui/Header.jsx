@@ -6,10 +6,11 @@ import {
   HiOutlineMoon,
   HiOutlineUser,
 } from "react-icons/hi2";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authContext } from "../features/authentication/authContext";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../features/authentication/UserAvatar";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -29,9 +30,7 @@ function Header() {
         <ButtonIcon onClick={() => navigate("/account")}>
           <HiOutlineUser />
         </ButtonIcon>
-        <ButtonIcon>
-          <HiOutlineMoon />
-        </ButtonIcon>
+        <DarkModeToggle />
         <ButtonIcon onClick={logOut}>
           <HiArrowRightOnRectangle />
         </ButtonIcon>

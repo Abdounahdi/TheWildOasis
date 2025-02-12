@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
+import TodayItem from "./TodayItem";
 
 const StyledToday = styled.div`
   /* Box */
@@ -36,12 +37,34 @@ const NoActivity = styled.p`
   margin-top: 0.8rem;
 `;
 
-function Today() {
+// const StyledRow = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1.6rem;
+//   overflow-y: scroll;
+
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+//   -ms-overflow-style: none;
+//   scrollbar-width: none;
+// `;
+
+function Today({ bookingsToday }) {
   return (
     <StyledToday>
       <Row type="horizontal">
         <Heading as="h2">Today</Heading>
       </Row>
+      <TodayList>
+        {bookingsToday.length ? (
+          bookingsToday.map((booking) => (
+            <TodayItem key={booking.id} booking={booking} />
+          ))
+        ) : (
+          <NoActivity>No Activity for today</NoActivity>
+        )}
+      </TodayList>
     </StyledToday>
   );
 }

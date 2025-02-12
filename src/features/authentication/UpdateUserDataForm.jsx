@@ -18,7 +18,7 @@ function UpdateUserDataForm() {
   // } = useUser();
 
   const userContext = useContext(authContext);
-  const email = userContext.user.user_metadata?.email;
+  const email = userContext.user?.email;
   const currentFullName = userContext.user.user_metadata?.full_name;
   const signIn = userContext.signIn;
 

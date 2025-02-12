@@ -17,6 +17,7 @@ import BookingDetail from "./features/bookings/BookingDetail";
 import CheckinBooking from "./features/check-in-out/CheckinBooking";
 import CheckOutBooking from "./features/check-in-out/CheckOutBooking";
 import { AuthProvider } from "./features/authentication/authContext.jsx";
+import { DarkModeProvider } from "./ui/DarkModeToggle.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,69 +29,71 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+    <DarkModeProvider>
+      <QueryClientProvider client={queryClient}>
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
 
-      <GlobalStyles />
+        <GlobalStyles />
 
-      <BrowserRouter>
-        <Routes>
-          <Route
-            element={
-              <AuthProvider>
-                <AppLayout />
-              </AuthProvider>
-            }
-          >
-            <Route index element={<Navigate replace to="dashboard" />} />
-            <Route path="dashboard" element={<Dashboard />} />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              element={
+                <AuthProvider>
+                  <AppLayout />
+                </AuthProvider>
+              }
+            >
+              <Route index element={<Navigate replace to="dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
 
-            <Route path="bookings" element={<Bookings />} />
-            <Route path="bookings/:id" element={<BookingDetail />} />
-            <Route path="checkin/:id" element={<CheckinBooking />} />
-            <Route path="checkout/:id" element={<CheckOutBooking />} />
+              <Route path="bookings" element={<Bookings />} />
+              <Route path="bookings/:id" element={<BookingDetail />} />
+              <Route path="checkin/:id" element={<CheckinBooking />} />
+              <Route path="checkout/:id" element={<CheckOutBooking />} />
 
-            <Route path="cabins" element={<Cabins />} />
-            <Route path="users" element={<Users />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="account" element={<Account />} />
-          </Route>
+              <Route path="cabins" element={<Cabins />} />
+              <Route path="users" element={<Users />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="account" element={<Account />} />
+            </Route>
 
-          <Route
-            path="login"
-            element={
-              <AuthProvider>
-                <Login />
-              </AuthProvider>
-            }
-          />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
+            <Route
+              path="login"
+              element={
+                <AuthProvider>
+                  <Login />
+                </AuthProvider>
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
 
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: "8px" }}
-        toastOptions={{
-          success: {
-            duration: 3000,
-          },
-          error: {
-            duration: 5000,
-          },
-          style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            padding: "16px 24px ",
-            backgroundColor: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
-          },
-        }}
-      />
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px ",
+              backgroundColor: "var(--color-grey-0)",
+              color: "var(--color-grey-700)",
+            },
+          }}
+        />
 
-      {/* */}
-    </QueryClientProvider>
+        {/* */}
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 

@@ -23,6 +23,11 @@ const HeaderRow = styled.div`
 `;
 
 function Login() {
+  if (localStorage.getItem("isDark") === "true") {
+    document.documentElement.classList.add("dark-mode");
+  } else {
+    document.documentElement.classList.add("light-mode");
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}

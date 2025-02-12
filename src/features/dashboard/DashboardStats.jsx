@@ -16,7 +16,7 @@ function DashboardStats({ options, bookings, cabins }) {
   values[2] = bookings.filter(
     (bookings) => bookings.status === "checked-in"
   ).length;
-  values[3] = `${(values[2] / cabins.length) * 100}%`;
+  values[3] = `${((values[2] / cabins.length) * 100).toFixed(2 , 0)}%`;
 
   return (
     <>

@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from "react";
 import { authContext } from "../features/authentication/authContext";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../features/authentication/UserAvatar";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -21,22 +22,6 @@ function Header() {
   const contextAuth = useContext(authContext);
   const logOut = contextAuth.signOut;
   const navigate = useNavigate();
-  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("isDark")==="true");
-
-  useEffect(
-    function () {
-      if (isDarkMode) {
-        localStorage.setItem("isDark", true);
-        document.documentElement.classList.remove("light-mode");
-        document.documentElement.classList.add("dark-mode");
-      } else {
-        localStorage.setItem("isDark", false);
-        document.documentElement.classList.remove("dark-mode");
-        document.documentElement.classList.add("light-mode");
-      }
-    },
-    [isDarkMode]
-  );
 
   return (
     <StyledHeader>
@@ -45,9 +30,7 @@ function Header() {
         <ButtonIcon onClick={() => navigate("/account")}>
           <HiOutlineUser />
         </ButtonIcon>
-        <ButtonIcon onClick={() => setIsDarkMode((state) => !state)}>
-          <HiOutlineMoon />
-        </ButtonIcon>
+        <DarkModeToggle />
         <ButtonIcon onClick={logOut}>
           <HiArrowRightOnRectangle />
         </ButtonIcon>

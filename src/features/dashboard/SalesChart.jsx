@@ -54,6 +54,38 @@ const fakeData = [
   { label: "Feb 06", totalSales: 1450, extrasSales: 400 },
 ];
 
+function prepareData(bookings) {
+  const arr = [];
+  const sortedBookings = bookings.sort(
+    (a, b) => new Date(a.startDate) - new Date(b.startDate)
+  );
+
+  const stagedData = sortedBookings.map((booking) => {
+    const formattedDate = new Date(booking.startDate).toLocaleDateString(
+      "en-US",
+      { month: "short", day: "2-digit" }
+    );
+    return {
+      label: formattedDate,
+      totalSales: booking.totalPrice,
+      extrasSales: booking.extrasPrice,
+    };
+  });
+  const prepared = stagedData
+    .map((obj) => {
+      if (arr.includes(obj.label)) {
+        stagedData.find((el) => el.label === obj.label).totalSales +=
+          obj.totalSales;
+        return null;
+      } else {
+        arr.push(obj.label);
+        return obj;
+      }
+    })
+    .filter((el) => el);
+  return prepared;
+}
+
 // let isDarkMode = localStorage.getItem("isDark") === "true";
 
 function SalesChart({ bookings }) {
@@ -71,12 +103,15 @@ function SalesChart({ bookings }) {
         text: "#374151",
         background: "#fff",
       };
+
+  const data = prepareData(bookings);
   return (
     <StyledSalesChart>
       <Heading as="h2">Sales from May 25 2023 — May 31 2023</Heading>
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart
-          data={fakeData}
+          data={data}
+          key="sales-chart"
           // margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke={colors.background} />

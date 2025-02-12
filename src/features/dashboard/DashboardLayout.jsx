@@ -5,6 +5,7 @@ import { HiCalendarDays, HiOutlineBanknotes } from "react-icons/hi2";
 import Today from "../check-in-out/TodayActivity";
 import DurationChart from "./DurationChart";
 import {
+  useBookings,
   useBookingsAfterDate,
   useBookingsToday,
 } from "../bookings/useBookings";
@@ -26,7 +27,6 @@ function DashboardLayout() {
     useBookingsToday();
   const isLoading =
     isLoadingBookings || isLoadingCabins || isLoadingTodayActivity;
-
   if (isLoading) return <Spinner />;
 
   return (

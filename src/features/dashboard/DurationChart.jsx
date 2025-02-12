@@ -152,7 +152,7 @@ function DurationChart({ confirmedStays }) {
     <ChartBox>
       <Heading as="h2">Stay duration summary</Heading>
       <ResponsiveContainer width={"100%"} height={240}>
-        <PieChart>
+        <PieChart key="duaration-chart">
           <Pie
             data={data}
             nameKey="duration"

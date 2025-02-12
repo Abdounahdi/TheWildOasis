@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "motion/react";
@@ -31,6 +32,10 @@ const Container = styled.div`
 function AppLayout() {
   const navigate = useNavigate();
   const context = useContext(authContext);
+
+  if (!localStorage.getItem("isDark")) {
+    localStorage.setItem("isDark", false);
+  }
 
   useEffect(
     function () {

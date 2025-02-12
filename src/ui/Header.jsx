@@ -6,7 +6,7 @@ import {
   HiOutlineMoon,
   HiOutlineUser,
 } from "react-icons/hi2";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authContext } from "../features/authentication/authContext";
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "../features/authentication/UserAvatar";
@@ -21,6 +21,22 @@ function Header() {
   const contextAuth = useContext(authContext);
   const logOut = contextAuth.signOut;
   const navigate = useNavigate();
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("isDark")==="true");
+
+  useEffect(
+    function () {
+      if (isDarkMode) {
+        localStorage.setItem("isDark", true);
+        document.documentElement.classList.remove("light-mode");
+        document.documentElement.classList.add("dark-mode");
+      } else {
+        localStorage.setItem("isDark", false);
+        document.documentElement.classList.remove("dark-mode");
+        document.documentElement.classList.add("light-mode");
+      }
+    },
+    [isDarkMode]
+  );
 
   return (
     <StyledHeader>
@@ -29,7 +45,7 @@ function Header() {
         <ButtonIcon onClick={() => navigate("/account")}>
           <HiOutlineUser />
         </ButtonIcon>
-        <ButtonIcon>
+        <ButtonIcon onClick={() => setIsDarkMode((state) => !state)}>
           <HiOutlineMoon />
         </ButtonIcon>
         <ButtonIcon onClick={logOut}>
